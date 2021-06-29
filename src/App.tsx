@@ -1,45 +1,55 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "react-query";
+import { Box, Button, Text } from "@chakra-ui/react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { setNewLyrics } from "./state/actions/lyricsAction";
+import { useDispatch } from "react-redux";
 
-function App() {
-  const [count, setCount] = useState(0)
+// api endpoint
+//
+
+const App = () => {
+  const { isLoading, error, data } = useQuery(
+    "taylorApi",
+    async () => await axios.get("https://taylorswiftapi.herokuapp.com/get")
+  );
+  const [lyrics, setLyrics] = useState("");
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  if (error) return <h1>Error</h1>;
+
+  console.log(error);
+
+  console.log(lyrics);
+
+  useEffect(() => {
+    if (lyrics) {
+      dispatch(setNewLyrics(lyrics));
+      history.push("/lyrics-info");
+    }
+  }, [lyrics]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
-}
+    <Box background="pink.400" h="100vh" color="white" textAlign="center">
+      <Text fontSize="3xl" mb={10}>
+        Taylor lyrics generator
+      </Text>
+      <Button
+        isLoading={isLoading}
+        variant="outline"
+        onClick={() => setLyrics(data?.data.quote)}
+      >
+        Get lyrics
+      </Button>
+    </Box>
+  );
+};
 
-export default App
+export default App;
