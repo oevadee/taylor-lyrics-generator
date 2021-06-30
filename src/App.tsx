@@ -11,23 +11,18 @@ import { useHistory } from "react-router-dom";
 import { setNewLyrics } from "./state/actions/lyricsAction";
 import { useDispatch } from "react-redux";
 
-// api endpoint
-//
-
 const App = () => {
   const { isLoading, error, data } = useQuery(
     "taylorApi",
     async () => await axios.get("https://taylorswiftapi.herokuapp.com/get")
   );
-  const [lyrics, setLyrics] = useState("");
+  const [lyrics, setLyrics] = useState(null);
   const history = useHistory();
   const dispatch = useDispatch();
 
+  console.log(data?.data);
+
   if (error) return <h1>Error</h1>;
-
-  console.log(error);
-
-  console.log(lyrics);
 
   useEffect(() => {
     if (lyrics) {
@@ -44,7 +39,7 @@ const App = () => {
       <Button
         isLoading={isLoading}
         variant="outline"
-        onClick={() => setLyrics(data?.data.quote)}
+        onClick={() => setLyrics(data?.data)}
       >
         Get lyrics
       </Button>

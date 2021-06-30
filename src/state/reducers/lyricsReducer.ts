@@ -1,11 +1,15 @@
 import { SetNewLyricsAction } from "../actions/lyricsAction";
 
-interface LyricsState {
-  lyrics: string;
+export interface LyricsState {
+  lyrics: {
+    quote: string;
+    song: string;
+    album: string;
+  } | null;
 }
 
 const initialState = {
-  lyrics: "",
+  lyrics: null,
 };
 
 const lyricsReducer = (
