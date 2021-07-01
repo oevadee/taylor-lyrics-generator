@@ -1,4 +1,5 @@
 import { combineReducers, applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import lyricsReducer, { LyricsState } from "./reducers/lyricsReducer";
 
@@ -10,6 +11,9 @@ const rootReducer = combineReducers({
   lyrics: lyricsReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;

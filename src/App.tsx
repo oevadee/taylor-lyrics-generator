@@ -5,44 +5,50 @@ import {
   useQueryClient,
   useInfiniteQuery,
 } from "react-query";
-import { Box, Button, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { setNewLyrics } from "./state/actions/lyricsAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ICombinedReducers } from "./state/store";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Box,
+  Spinner,
+  Text,
+  Image,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { CustomTable, LyricsAdder } from "./components";
 
 const App = () => {
-  const { isLoading, error, data } = useQuery(
-    "taylorApi",
-    async () => await axios.get("https://taylorswiftapi.herokuapp.com/get")
-  );
   const [lyrics, setLyrics] = useState(null);
   const history = useHistory();
   const dispatch = useDispatch();
-
-  console.log(data?.data);
-
-  if (error) return <h1>Error</h1>;
-
-  useEffect(() => {
-    if (lyrics) {
-      dispatch(setNewLyrics(lyrics));
-      history.push("/lyrics-info");
-    }
-  }, [lyrics]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box background="pink.400" h="100vh" color="white" textAlign="center">
-      <Text fontSize="3xl" mb={10}>
+    <Box background="gray.900" h="100vh" color="white" textAlign="center" p={5}>
+      <Text fontSize="4xl" mb={10}>
         Taylor lyrics generator
       </Text>
-      <Button
-        isLoading={isLoading}
-        variant="outline"
-        onClick={() => setLyrics(data?.data)}
-      >
-        Get lyrics
+      <Button colorScheme="pink" onClick={onOpen}>
+        Gnerate lyrics
       </Button>
+      {isOpen && <LyricsAdder isOpen={isOpen} onClose={onClose} />}
+      <CustomTable />
     </Box>
   );
 };
