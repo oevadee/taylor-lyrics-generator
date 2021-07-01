@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Box, Text, Button, useDisclosure } from "@chakra-ui/react";
 import { CustomTable, LyricsAdder } from "./components";
-import { bindActionCreators } from "redux";
-import { useDispatch } from "react-redux";
 
 const App = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

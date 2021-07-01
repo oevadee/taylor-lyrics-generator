@@ -1,11 +1,5 @@
-import { LyricsActionType, LyricsAction } from "../types/lyricsTypes";
+import { LyricsActionType, LyricsAction, ILyrics } from "../types/lyricsTypes";
 import { Dispatch } from "redux";
-
-interface ILyrics {
-  quote: string;
-  song: string;
-  album: string;
-}
 
 export const showNewLyrics =
   (lyrics: ILyrics) => (dispatch: Dispatch<LyricsAction>) =>

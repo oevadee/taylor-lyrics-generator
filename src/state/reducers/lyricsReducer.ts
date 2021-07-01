@@ -1,8 +1,8 @@
 import {
   LyricsAction,
   LyricsActionType,
-  ILyrics,
   LyricsState,
+  ILyrics,
 } from "../types/lyricsTypes";
 
 const initialState = {
@@ -24,7 +24,20 @@ const lyricsReducer = (
     case LyricsActionType.ADD_NEW_FAVE_LYRICS: {
       return {
         ...state,
-        faveLyrics: [...state.faveLyrics, action.payload],
+        faveLyrics: [
+          ...state.faveLyrics,
+          {
+            ...action.payload,
+          },
+        ],
+      };
+    }
+    case LyricsActionType.REMOVE_FAVE_LYRICS: {
+      return {
+        ...state,
+        faveLyrics: state.faveLyrics.filter(
+          (el: ILyrics) => el.uuid === action.payload
+        ),
       };
     }
     default: {

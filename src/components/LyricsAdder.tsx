@@ -17,6 +17,7 @@ import axios from "axios";
 import { getImage } from "../utils/getImage";
 import { useDispatch } from "react-redux";
 import { addNewFaveLyrics } from "../state/actions/lyricsAction";
+import { v4 as uuidv4 } from "uuid";
 
 interface LyricsAdder {
   isOpen: boolean;
@@ -38,8 +39,6 @@ const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
   }, [data]);
 
   if (!data) return null;
-
-  console.log(data.data);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -77,7 +76,11 @@ const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
               colorScheme="pink"
               mr={3}
               onClick={() => {
-                dispatch(addNewFaveLyrics(data.data));
+                const newLyrics = {
+                  uuid: uuidv4(),
+                  ...data.data,
+                };
+                dispatch(addNewFaveLyrics(newLyrics));
                 onClose();
               }}
             >

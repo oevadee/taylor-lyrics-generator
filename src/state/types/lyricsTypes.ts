@@ -1,4 +1,5 @@
 export interface ILyrics {
+  uuid: string;
   quote: string;
   song: string;
   album: string;
@@ -12,6 +13,7 @@ export type LyricsState = {
 export enum LyricsActionType {
   SHOW_NEW_LYRICS = "SHOW_NEW_LYRICS",
   ADD_NEW_FAVE_LYRICS = "ADD_NEW_FAVELYRICS",
+  REMOVE_FAVE_LYRICS = "REMOVE_FAVE_LYRICS",
 }
 
 interface ShowNewLyricsAction {
@@ -24,4 +26,12 @@ interface AddNewFaveLyrics {
   payload: ILyrics;
 }
 
-export type LyricsAction = ShowNewLyricsAction | AddNewFaveLyrics;
+interface RemoveFaveLyrics {
+  type: LyricsActionType.REMOVE_FAVE_LYRICS;
+  payload: string;
+}
+
+export type LyricsAction =
+  | ShowNewLyricsAction
+  | AddNewFaveLyrics
+  | RemoveFaveLyrics;

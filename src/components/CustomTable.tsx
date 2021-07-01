@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ICombinedReducers } from "../state/store";
 import { getImage } from "../utils/getImage";
 import { ILyrics } from "../state/types/lyricsTypes";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const CustomTable = () => {
   const faveLyrics = useSelector(
@@ -23,6 +24,7 @@ const CustomTable = () => {
             <Th>Taylor's quote</Th>
             <Th>Song</Th>
             <Th>album</Th>
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -37,6 +39,9 @@ const CustomTable = () => {
                 {lyric.album === "Fearless"
                   ? `Fearless (Taylor's Version)`
                   : lyric.album}
+              </Td>
+              <Td>
+                <DeleteIcon />
               </Td>
             </Tr>
           ))}
