@@ -3,11 +3,16 @@ import { Table, Thead, Tbody, Tr, Th, Td, Box, Image } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { ICombinedReducers } from "../state/store";
 import { getImage } from "../utils/getImage";
+import { ILyrics } from "../state/types/lyricsTypes";
 
 const CustomTable = () => {
-  const state = useSelector((state: ICombinedReducers) => state.lyrics.lyrics);
+  const faveLyrics = useSelector(
+    (state: ICombinedReducers) => state.lyrics.faveLyrics
+  );
 
-  if (!state) return null;
+  console.log(faveLyrics);
+
+  if (!faveLyrics) return null;
 
   return (
     <Box p={10}>
@@ -21,18 +26,20 @@ const CustomTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>
-              <Image w={100} src={getImage(state.album)} alt={state.album} />
-            </Td>
-            <Td>{state.quote}</Td>
-            <Td>{state.song}</Td>
-            <Td>
-              {state.album === "Fearless"
-                ? `Fearless (Taylor's Version)`
-                : state.album}
-            </Td>
-          </Tr>
+          {faveLyrics.map((lyric: ILyrics) => (
+            <Tr>
+              <Td>
+                <Image w={100} src={getImage(lyric.album)} alt={lyric.album} />
+              </Td>
+              <Td>{lyric.quote}</Td>
+              <Td>{lyric.song}</Td>
+              <Td>
+                {lyric.album === "Fearless"
+                  ? `Fearless (Taylor's Version)`
+                  : lyric.album}
+              </Td>
+            </Tr>
+          ))}
         </Tbody>
       </Table>
     </Box>

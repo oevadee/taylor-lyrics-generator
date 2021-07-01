@@ -1,26 +1,30 @@
-import { SetNewLyricsAction } from "../actions/lyricsAction";
-
-export interface LyricsState {
-  lyrics: {
-    quote: string;
-    song: string;
-    album: string;
-  } | null;
-}
+import {
+  LyricsAction,
+  LyricsActionType,
+  ILyrics,
+  LyricsState,
+} from "../types/lyricsTypes";
 
 const initialState = {
   lyrics: null,
+  faveLyrics: [],
 };
 
 const lyricsReducer = (
   state: LyricsState = initialState,
-  action: SetNewLyricsAction
+  action: LyricsAction
 ) => {
   switch (action.type) {
-    case "SET_NEW_LYRICS": {
+    case LyricsActionType.SHOW_NEW_LYRICS: {
       return {
         ...state,
         lyrics: action.payload,
+      };
+    }
+    case LyricsActionType.ADD_NEW_FAVE_LYRICS: {
+      return {
+        ...state,
+        faveLyrics: [...state.faveLyrics, action.payload],
       };
     }
     default: {

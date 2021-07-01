@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { ICombinedReducers } from "../state/store";
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Box,
-  Spinner,
   Text,
   Image,
   Button,
@@ -22,11 +12,11 @@ import {
   Heading,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { setNewLyrics } from "../state/actions/lyricsAction";
 import { getImage } from "../utils/getImage";
+import { useDispatch } from "react-redux";
+import { addNewFaveLyrics } from "../state/actions/lyricsAction";
 
 interface LyricsAdder {
   isOpen: boolean;
@@ -34,18 +24,12 @@ interface LyricsAdder {
 }
 
 const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
+  const dispatch = useDispatch();
   const [newLyrics, setNewLyrics] = useState();
-  const { isLoading, error, data, refetch, isPreviousData } = useQuery(
+  const { isLoading, data, refetch, isFetched, isSuccess } = useQuery(
     "taylorApi",
-    async () => await axios.get("https://taylorswiftapi.herokuapp.com/get"),
-    {
-      refetchOnMount: true,
-    }
+    async () => await axios.get("https://taylorswiftapi.herokuapp.com/get")
   );
-
-  console.log(isPreviousData);
-
-  console.log(newLyrics);
 
   useEffect(() => {
     if (data) {
@@ -53,12 +37,14 @@ const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
     }
   }, [data]);
 
-  if (isLoading || !data || error) return <Spinner />;
+  if (!data) return null;
+
+  console.log(data.data);
 
   return (
-    <Box background="gray.900" h="100vh" color="white" textAlign="center" p={5}>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      {isFetched && (
         <ModalContent>
           <ModalHeader>Taylor's lyrics</ModalHeader>
           <ModalCloseButton />
@@ -66,34 +52,41 @@ const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
             <Image
               w={100}
               src={getImage(data.data.album)}
-              alt={data?.data.album}
+              alt={data.data.album}
               mb={2}
             />
             <Heading>{data?.data.album}</Heading>
-            <Text fontSize="xl">{data?.data.song}</Text>
-            <Text fontSize="m">{data?.data.quote}</Text>
+            <Text fontSize="xl">{data.data.song}</Text>
+            <Text fontSize="m">{data.data.quote}</Text>
           </ModalBody>
 
-          <ModalFooter>
+          <ModalFooter d="flex" justifyContent="space-between">
             <Button
+              isLoading={isLoading}
+              colorScheme="pink"
+              variant="outline"
+              mr={3}
+              onClick={() => {
+                refetch();
+              }}
+            >
+              Next lyrics
+            </Button>
+            <Button
+              isLoading={isLoading}
               colorScheme="pink"
               mr={3}
               onClick={() => {
+                dispatch(addNewFaveLyrics(data.data));
                 onClose();
               }}
             >
-              Fav the lyrics
+              Fave the lyrics
             </Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
-      <Box position="relative">
-        <Button colorScheme="pink" position="absolute" left="10" top="3">
-          Back
-        </Button>
-        <Text fontSize="4xl">Taylor lyrics generator</Text>
-      </Box>
-    </Box>
+      )}
+    </Modal>
   );
 };
 

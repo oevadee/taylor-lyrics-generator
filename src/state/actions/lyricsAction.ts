@@ -1,21 +1,20 @@
-import { LyricsState } from "../reducers/lyricsReducer";
+import { LyricsActionType, LyricsAction } from "../types/lyricsTypes";
+import { Dispatch } from "redux";
 
-export type SetNewLyricsAction = {
-  type: "SET_NEW_LYRICS";
-  payload: {
-    quote: string;
-    song: string;
-    album: string;
-  } | null;
-};
+interface ILyrics {
+  quote: string;
+  song: string;
+  album: string;
+}
 
-export const setNewLyrics = (
-  lyrics: {
-    quote: string;
-    song: string;
-    album: string;
-  } | null
-): SetNewLyricsAction => ({
-  type: "SET_NEW_LYRICS",
+export const showNewLyrics =
+  (lyrics: ILyrics) => (dispatch: Dispatch<LyricsAction>) =>
+    dispatch({
+      type: LyricsActionType.SHOW_NEW_LYRICS,
+      payload: lyrics,
+    });
+
+export const addNewFaveLyrics = (lyrics: ILyrics) => ({
+  type: LyricsActionType.ADD_NEW_FAVE_LYRICS,
   payload: lyrics,
 });

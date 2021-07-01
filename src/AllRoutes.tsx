@@ -10,9 +10,7 @@ import App from "./App";
 const AllRoutes = () => {
   return (
     <Router>
-      <Switch>
-        <Redirect to="/app" />
-      </Switch>
+      <Redirect to="/app" />
       <Route path="/app" component={App} />
     </Router>
   );

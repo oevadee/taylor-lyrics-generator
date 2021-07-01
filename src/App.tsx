@@ -1,42 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
-} from "react-query";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { setNewLyrics } from "./state/actions/lyricsAction";
-import { useDispatch, useSelector } from "react-redux";
-import { ICombinedReducers } from "./state/store";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Box,
-  Spinner,
-  Text,
-  Image,
-  Button,
-  useDisclosure,
-} from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box, Text, Button, useDisclosure } from "@chakra-ui/react";
 import { CustomTable, LyricsAdder } from "./components";
+import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
 
 const App = () => {
-  const [lyrics, setLyrics] = useState(null);
-  const history = useHistory();
-  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -44,7 +12,7 @@ const App = () => {
       <Text fontSize="4xl" mb={10}>
         Taylor lyrics generator
       </Text>
-      <Button colorScheme="pink" onClick={onOpen}>
+      <Button colorScheme="pink" onClick={() => onOpen()}>
         Gnerate lyrics
       </Button>
       {isOpen && <LyricsAdder isOpen={isOpen} onClose={onClose} />}
