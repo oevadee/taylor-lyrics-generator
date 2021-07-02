@@ -12,3 +12,8 @@ export const addNewFaveLyrics = (lyrics: ILyrics) => ({
   type: LyricsActionType.ADD_NEW_FAVE_LYRICS,
   payload: lyrics,
 });
+
+export const removeFaveLyrics = (uuid: string) => ({
+  type: LyricsActionType.REMOVE_FAVE_LYRICS,
+  payload: uuid,
+});

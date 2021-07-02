@@ -27,7 +27,7 @@ interface LyricsAdder {
 const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
   const dispatch = useDispatch();
   const [newLyrics, setNewLyrics] = useState();
-  const { isLoading, data, refetch, isFetched, isSuccess } = useQuery(
+  const { isLoading, data, refetch, isFetched } = useQuery(
     "taylorApi",
     async () => await axios.get("https://taylorswiftapi.herokuapp.com/get")
   );

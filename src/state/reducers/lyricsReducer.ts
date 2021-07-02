@@ -36,7 +36,7 @@ const lyricsReducer = (
       return {
         ...state,
         faveLyrics: state.faveLyrics.filter(
-          (el: ILyrics) => el.uuid === action.payload
+          (el: ILyrics) => el.uuid !== action.payload
         ),
       };
     }

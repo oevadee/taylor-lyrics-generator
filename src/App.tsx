@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Text, Button, useDisclosure } from "@chakra-ui/react";
 import { CustomTable, LyricsAdder } from "./components";
 
