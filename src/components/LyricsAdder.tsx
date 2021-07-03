@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Text,
   Image,
@@ -26,29 +26,27 @@ interface LyricsAdder {
 
 const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
   const dispatch = useDispatch();
-  const [newLyrics, setNewLyrics] = useState();
-  const { isLoading, data, refetch, isFetched } = useQuery(
+  const { isLoading, data, refetch, isFetchedAfterMount } = useQuery(
     "taylorApi",
-    async () => await axios.get("https://taylorswiftapi.herokuapp.com/get")
-  );
-
-  useEffect(() => {
-    if (data) {
-      setNewLyrics(data.data);
+    async () => await axios.get("https://taylorswiftapi.herokuapp.com/get"),
+    {
+      refetchOnWindowFocus: false,
     }
-  }, [data]);
+  );
 
   if (!data) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      {isFetched && (
+      {isFetchedAfterMount && (
         <ModalContent>
           <ModalHeader>Taylor's lyrics</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Image
+              boxSize="100px"
+              h={100}
               w={100}
               src={getImage(data.data.album)}
               alt={data.data.album}

@@ -36,7 +36,7 @@ const CustomTable = () => {
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th></Th>
+            <Th w={100}></Th>
             <Th>Taylor's quote</Th>
             <Th>Song</Th>
             <Th>album</Th>
