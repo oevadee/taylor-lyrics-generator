@@ -32,7 +32,7 @@ const CustomTable = () => {
   if (!faveLyrics) return null;
 
   return (
-    <Box p={10}>
+    <Box m={10} flex={1} overflowY="scroll">
       <Table variant="simple">
         <Thead>
           <Tr>

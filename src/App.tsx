@@ -6,7 +6,17 @@ const App = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box background="gray.900" h="100vh" color="white" textAlign="center" p={5}>
+    <Box
+      background="gray.900"
+      h="100vh"
+      w="100vw"
+      color="white"
+      textAlign="center"
+      p={5}
+      d="flex"
+      flexDir="column"
+      alignItems="center"
+    >
       <Text fontSize="4xl" mb={10}>
         Taylor lyrics generator
       </Text>
