@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Thead,
@@ -29,7 +29,7 @@ const CustomTable = () => {
     dispatch(removeFaveLyrics(uuid));
   };
 
-  if (!faveLyrics) return null;
+  if (!faveLyrics.length) return null;
 
   return (
     <Box m={10} flex={1} overflowY="scroll">

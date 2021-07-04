@@ -11,6 +11,7 @@ import {
   ModalBody,
   Heading,
   ModalCloseButton,
+  Spinner,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -39,54 +40,58 @@ const LyricsAdder = ({ isOpen, onClose }: LyricsAdder) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      {isFetchedAfterMount && (
-        <ModalContent>
-          <ModalHeader>Taylor's lyrics</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Image
-              boxSize="100px"
-              h={100}
-              w={100}
-              src={getImage(data.data.album)}
-              alt={data.data.album}
-              mb={2}
-            />
-            <Heading>{data?.data.album}</Heading>
-            <Text fontSize="xl">{data.data.song}</Text>
-            <Text fontSize="m">{data.data.quote}</Text>
-          </ModalBody>
+      <ModalContent>
+        {isFetchedAfterMount ? (
+          <>
+            <ModalHeader>Taylor's lyrics</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Image
+                boxSize="100px"
+                h={100}
+                w={100}
+                src={getImage(data.data.album)}
+                alt={data.data.album}
+                mb={2}
+              />
+              <Heading>{data?.data.album}</Heading>
+              <Text fontSize="xl">{data.data.song}</Text>
+              <Text fontSize="m">{data.data.quote}</Text>
+            </ModalBody>
 
-          <ModalFooter d="flex" justifyContent="space-between">
-            <Button
-              isLoading={isLoading}
-              colorScheme="pink"
-              variant="outline"
-              mr={3}
-              onClick={() => {
-                refetch();
-              }}
-            >
-              Next lyrics
-            </Button>
-            <Button
-              isLoading={isLoading}
-              colorScheme="pink"
-              mr={3}
-              onClick={() => {
-                const newLyrics = {
-                  uuid: uuidv4(),
-                  ...data.data,
-                };
-                dispatch(addNewFaveLyrics(newLyrics));
-                onClose();
-              }}
-            >
-              Fave the lyrics
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      )}
+            <ModalFooter d="flex" justifyContent="space-between">
+              <Button
+                isLoading={isLoading}
+                colorScheme="pink"
+                variant="outline"
+                mr={3}
+                onClick={() => {
+                  refetch();
+                }}
+              >
+                Next lyrics
+              </Button>
+              <Button
+                isLoading={isLoading}
+                colorScheme="pink"
+                mr={3}
+                onClick={() => {
+                  const newLyrics = {
+                    uuid: uuidv4(),
+                    ...data.data,
+                  };
+                  dispatch(addNewFaveLyrics(newLyrics));
+                  onClose();
+                }}
+              >
+                Fave the lyrics
+              </Button>
+            </ModalFooter>
+          </>
+        ) : (
+          <Spinner />
+        )}
+      </ModalContent>
     </Modal>
   );
 };

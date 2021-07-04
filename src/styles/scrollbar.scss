@@ -1,0 +1,28 @@
+$base-color: #494949;
+
+* {
+  scrollbar-face-color: $base-color;
+  scrollbar-base-color: $base-color;
+  scrollbar-3dlight-color: $base-color;
+  scrollbar-highlight-color: $base-color;
+  scrollbar-track-color: rgb(15, 16, 21);
+  scrollbar-arrow-color: rgb(15, 16, 21);
+  scrollbar-shadow-color: $base-color;
+  scrollbar-dark-shadow-color: $base-color;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 3px;
+}
+
+*::-webkit-scrollbar-track-piece {
+  background-color: rgb(24, 26, 27);
+}
+
+*::-webkit-scrollbar-thumb {
+  height: 10px;
+  background-color: $base-color;
+  padding: 2px;
+  border-radius: 3px;
+}

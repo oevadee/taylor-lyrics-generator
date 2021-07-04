@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Text, Button, useDisclosure } from "@chakra-ui/react";
 import { CustomTable, LyricsAdder } from "./components";
+import "./styles/scrollbar.scss";
 
 const App = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
