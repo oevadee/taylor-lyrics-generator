@@ -5,6 +5,7 @@ import lyricsReducer from "./reducers/lyricsReducer";
 import logger from "redux-logger";
 import { LyricsState } from "./types/lyricsTypes";
 import { loadState, saveState } from "./middlewares/localStorage";
+import throttle from "lodash/throttle";
 
 export interface ICombinedReducers {
   lyrics: LyricsState;
@@ -21,8 +22,10 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk, logger))
 );
 
-store.subscribe(() => {
-  saveState(store.getState());
-});
+store.subscribe(
+  throttle(() => {
+    saveState(store.getState());
+  }, 1000)
+);
 
 export default store;

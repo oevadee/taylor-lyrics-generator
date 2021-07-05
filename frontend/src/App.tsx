@@ -62,7 +62,10 @@ const App = () => {
               mb={5}
               placeholder="Enter album name"
               value={albumName}
-              onChange={(e) => setAlbumName(e.target.value)}
+              onChange={(e) => {
+                setSongName("");
+                setAlbumName(e.target.value);
+              }}
             />
             <Button onClick={() => onOpen()}>Gnerate lyrics</Button>
           </TabPanel>
@@ -71,7 +74,10 @@ const App = () => {
               mb={5}
               placeholder="Enter song name"
               value={songName}
-              onChange={(e) => setSongName(e.target.value)}
+              onChange={(e) => {
+                setAlbumName("");
+                setSongName(e.target.value);
+              }}
             />
             <Button onClick={() => onOpen()}>Gnerate lyrics</Button>
           </TabPanel>

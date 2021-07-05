@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ICombinedReducers } from "../state/store";
 import { getImage } from "../utils/getImage";
 import { ILyrics } from "../state/types/lyricsTypes";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon, StarIcon } from "@chakra-ui/icons";
 import { removeFaveLyrics } from "../state/actions/lyricsAction";
 
 const CustomTable = () => {
@@ -36,6 +36,7 @@ const CustomTable = () => {
       <Table variant="simple">
         <Thead>
           <Tr>
+            <Th></Th>
             <Th w={100}></Th>
             <Th>Taylor's quote</Th>
             <Th>Song</Th>
@@ -46,6 +47,12 @@ const CustomTable = () => {
         <Tbody>
           {faveLyrics.map((lyric: ILyrics) => (
             <Tr cursor="pointer" id={lyric.uuid} key={lyric.uuid}>
+              <Td>
+                <StarIcon
+                  fill="transparent"
+                  onClick={() => console.log("test")}
+                />
+              </Td>
               <Td>
                 <Image w={100} src={getImage(lyric.album)} alt={lyric.album} />
               </Td>

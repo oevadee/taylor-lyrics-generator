@@ -1,3 +1,5 @@
+import { EmptyObject } from "redux";
+import { ICombinedReducers } from "../store";
 import { LyricsState } from "../types/lyricsTypes";
 
 export const loadState = () => {
@@ -11,7 +13,7 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state: LyricsState) => {
+export const saveState = (state: EmptyObject & ICombinedReducers) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("lyrics", serializedState);
